@@ -11,4 +11,15 @@ class ResturantController extends Controller
     {
         return Resturant::all();
     }
+
+    public function store(Request $request)
+    {
+        try{
+            Resturant::create($request->all());
+            return response(['status' => 'created'],201);
+        }catch(\Exception $e ){
+            return response()->json(['message' => $e->getMessage()],500);
+        }
+        
+    }
 }

@@ -72,16 +72,23 @@ const app = new Vue({
                 name: "Placeholder",
                 hours: "00:00am - 00:00pm",
                 city: "Georgia",
-                State: "GA",
+                state: 'GA',
                 latitude: e.latLng.lat(),
                 longitude: e.latLng.lng()
 
             });
 
             axios.post('/api/resturants/create', {
+                name: "Placeholder",
+                hours: "00:00am - 00:00pm",
+                city: "Georgia",
+                address: "The local address",
+                state: 'GA',
                 latitude: e.latLng.lat(),
-                longitude: e.latLng.lng()
+                longitude: e.latLng.lng() 
             })
+                .then((res) => console.log(res))
+                .catch((error) => console.log(error));
         }
     },
 

@@ -5438,9 +5438,9 @@ var app = new Vue({
       return console.error(errors);
     });
   },
-  mounted: function mounted() {
-    console.log("AIzaSyChVJZcCj7S73QOmSNSNdCCGNl3LvupLXg");
-  },
+  // mounted() {
+  //     console.log(process.env.MIX_GOOGLE_MAP_APIKEY);
+  //   },
   methods: {
     getPosition: function getPosition(r) {
       return {
@@ -5460,13 +5460,22 @@ var app = new Vue({
         name: "Placeholder",
         hours: "00:00am - 00:00pm",
         city: "Georgia",
-        State: "GA",
+        state: 'GA',
         latitude: e.latLng.lat(),
         longitude: e.latLng.lng()
       });
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/resturants/create', {
+        name: "Placeholder",
+        hours: "00:00am - 00:00pm",
+        city: "Georgia",
+        address: "The local address",
+        state: 'GA',
         latitude: e.latLng.lat(),
         longitude: e.latLng.lng()
+      }).then(function (res) {
+        return console.log(res);
+      })["catch"](function (error) {
+        return console.log(error);
       });
     }
   },
