@@ -1,32 +1,105 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+
 
 require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import axios from 'axios';
+//import google map
+import * as VueGoogleMaps from 'vue2-google-maps';
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: 'AIzaSyChVJZcCj7S73QOmSNSNdCCGNl3LvupLXg'
+    },
+    //installComponents: true,
+});
+
+// Vue.component('google-maps-map', VueGoogleMaps.Map);
+// Vue.component('google-maps-marker', VueGoogleMaps.Marker);
 
 const app = new Vue({
     el: '#app',
+    data() {
+        return {
+            resturants: [],
+            infoWindowOptions: {
+                pixelOffset : {
+                    width: 0,
+                    height: -35
+                }
+            },
+            activeResturant: {},
+            infoWindowOpened: false
+        }
+    },
+
+    created() {
+        axios.get('/api/resturants')
+            .then((response) => this.resturants = response.data)
+            .catch((errors) => console.error(errors));
+    },
+
+    methods: {
+        getPosition(r) {
+            return{
+                lat: parseFloat(r.latitude),
+                lng: parseFloat(r.longitude)
+            }
+        },
+
+        handleMarkerClicked(r) {
+            this.activeResturant = r;
+            this.infoWindowOpened = true;
+        }, 
+
+        handleInfoWindowClose() {
+            this.activeResturant = {},
+            this.infoWindowOpened = false;
+        },
+
+        handleMapClick(e) {
+            this.resturants.push({
+                name: "Placeholder",
+                hours: "00:00am - 00:00pm",
+                city: "Georgia",
+                State: "GA",
+                latitude: e.latLng.lat(),
+                longitude: e.latLng.lng()
+
+            });
+
+            axios.post('/api/resturants/create', {
+                latitude: e.latLng.lat(),
+                longitude: e.latLng.lng()
+            })
+        }
+    },
+
+    computed: {
+        mapCenter() {
+            if(!this.resturants.length) {
+                return {
+                    lat : 10,
+                    lng : 10
+                }
+            }
+
+            return {
+                lat: parseFloat(this.resturants[0].latitude),
+                lng: parseFloat(this.resturants[0].longitude)
+            }
+        },
+
+        infoWindowPosition() {
+            return {
+                lat: parseFloat(this.activeResturant.latitude),
+                lng: parseFloat(this.activeResturant.longitude)
+            }
+        },
+    }
+
 });
