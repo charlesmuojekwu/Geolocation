@@ -5408,7 +5408,7 @@ Vue.component('example-component', (__webpack_require__(/*! ./components/Example
 
 Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_1__, {
   load: {
-    key: 'AIzaSyChVJZcCj7S73QOmSNSNdCCGNl3LvupLXg'
+    key: "AIzaSyChVJZcCj7S73QOmSNSNdCCGNl3LvupLXg"
   } //installComponents: true,
 
 }); // Vue.component('google-maps-map', VueGoogleMaps.Map);
@@ -5437,6 +5437,9 @@ var app = new Vue({
     })["catch"](function (errors) {
       return console.error(errors);
     });
+  },
+  mounted: function mounted() {
+    console.log("AIzaSyChVJZcCj7S73QOmSNSNdCCGNl3LvupLXg");
   },
   methods: {
     getPosition: function getPosition(r) {

@@ -23,7 +23,7 @@
     <body class="antialiased">
         <div class="justify-center ">
             <div class="content">
-                <h2>Resturants</h2>
+                <h2>Resturants -- {{ config('')}}</h2>
 
                 <div class="map" id="app">
                     <gmap-map

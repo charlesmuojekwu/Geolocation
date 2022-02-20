@@ -8,12 +8,14 @@ window.Vue = require('vue').default;
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 import axios from 'axios';
+
 //import google map
 import * as VueGoogleMaps from 'vue2-google-maps';
 
+
 Vue.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyChVJZcCj7S73QOmSNSNdCCGNl3LvupLXg'
+        key:process.env.MIX_GOOGLE_MAP_APIKEY
     },
     //installComponents: true,
 });
@@ -42,6 +44,10 @@ const app = new Vue({
             .then((response) => this.resturants = response.data)
             .catch((errors) => console.error(errors));
     },
+
+    mounted() {
+        console.log(process.env.MIX_GOOGLE_MAP_APIKEY);
+      },
 
     methods: {
         getPosition(r) {
