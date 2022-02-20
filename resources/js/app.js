@@ -45,9 +45,9 @@ const app = new Vue({
             .catch((errors) => console.error(errors));
     },
 
-    mounted() {
-        console.log(process.env.MIX_GOOGLE_MAP_APIKEY);
-      },
+    // mounted() {
+    //     console.log(process.env.MIX_GOOGLE_MAP_APIKEY);
+    //   },
 
     methods: {
         getPosition(r) {
